@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Imagens</title>
+    <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      margin: 0;
+    }
+      #image-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+      #image-container img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+     header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+      }
+    </style>
+</head>
+<body>
+  <header>
+    <h1>Pesquisar Imagens</h1>
+
+    <label for="search">Digite o formato (quadrado, retangular, vertical):</label>
+    <input type="text" id="search" placeholder="Formato da imagem" oninput="filterImages()">
+   </header>
+
+    <div id="image-container"></div>
+
+    <script>
+        // Array de objetos com as imagens e seus formatos
+        const images = [
+            { id: 1, url: 'https://picsum.photos/300/300', format: 'quadrado' },
+            { id: 2, url: 'https://picsum.photos/400/300', format: 'retangular' },
+            { id: 3, url: 'https://picsum.photos/300/400', format: 'vertical' },
+            { id: 4, url: 'https://picsum.photos/350/350', format: 'quadrado' },
+            { id: 5, url: 'https://picsum.photos/500/300', format: 'retangular' },
+            { id: 6, url: 'https://picsum.photos/300/500', format: 'vertical' },
+            { id: 7, url: 'https://picsum.photos/300/300', format: 'quadrado' },
+            { id: 8, url: 'https://picsum.photos/450/300', format: 'retangular' },
+            { id: 9, url: 'https://picsum.photos/300/450', format: 'vertical' },
+            { id: 10, url: 'https://picsum.photos/400/400', format: 'quadrado' },
+            { id: 11, url: 'https://picsum.photos/600/300', format: 'retangular' },
+            { id: 12, url: 'https://picsum.photos/300/600', format: 'vertical' }
+        ];
+
+        // Função para exibir as imagens na tela
+        function displayImages(imageArray) {
+            const container = document.getElementById('image-container');
+            container.innerText = ''; // Limpa o container de imagens
+
+            imageArray.forEach(image => {
+                const img = document.createElement('img');
+                img.src = image.url;
+                img.alt = `Imagem ${image.format}`;
+                container.appendChild(img);
+            });
+        }
+
+        // Função para filtrar as imagens com base na pesquisa do input
+        function filterImages() {
+            const searchValue = document.getElementById('search').value.toLowerCase();
+            const filteredImages = images.filter(image => image.format.includes(searchValue));
+            displayImages(filteredImages);
+        }
+
+        // Exibe todas as imagens ao carregar a página
+        displayImages(images);
+    </script>
+
+</body>
+</html>
